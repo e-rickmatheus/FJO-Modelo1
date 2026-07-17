@@ -2156,3 +2156,12 @@ html {
     transform: none;
   }
 }
+
+/* Custom image crop positioning for Dr. Fernando */
+.img-about-dr-fernando {
+  object-position: center 20% !important;
+}
+
+.img-dr-fernando {
+  object-position: center 12% !important;
+}
