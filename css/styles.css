@@ -1150,6 +1150,14 @@ html {
   margin-bottom: 10px;
 }
 
+.timeline-card h3 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--white);
+  margin-bottom: 14px;
+}
+
 .timeline-card p {
   font-family: var(--font-body);
   font-weight: 300;
