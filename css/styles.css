@@ -534,11 +534,11 @@ html {
 .gold-line {
   width: 100px;
   height: 2px;
-  background: var(--gold);
+  background: transparent;
   margin: 48px auto 0;
   position: relative;
+  overflow: hidden;
   animation: fadeInUp 0.8s 0.8s var(--ease-smooth) both;
-  box-shadow: 0 0 12px var(--gold-glow);
 }
 
 .gold-line::after {
@@ -549,7 +549,7 @@ html {
   width: 50%;
   height: 100%;
   background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
-  animation: shimmer 3s infinite;
+  animation: shimmer 2.5s infinite linear;
 }
 
 /* Scroll Indicator */
@@ -1071,12 +1071,13 @@ html {
 
 .timeline-nav-wrapper {
   position: relative;
-  padding: 20px 0;
+  padding: 60px 0 20px; /* Space for absolute years */
+  margin-bottom: 20px;
 }
 
 .timeline-line {
   position: absolute;
-  top: 50%;
+  top: 70px; /* Centered exactly with the 20px dot track */
   left: 0;
   right: 0;
   height: 2px;
@@ -1087,7 +1088,6 @@ html {
     var(--gold) 85%,
     transparent
   );
-  transform: translateY(-50%);
   z-index: 1;
 }
 
@@ -1099,22 +1099,30 @@ html {
   z-index: 2;
   max-width: 800px;
   margin: 0 auto;
+  height: 20px;
 }
 
 .timeline-nav-btn {
+  position: relative;
   background: none;
   border: none;
   cursor: pointer;
+  width: 20px;
+  height: 20px;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 12px;
-  padding: 10px;
-  transition: all 0.3s var(--ease-smooth);
+  justify-content: center;
   outline: none;
+  padding: 0;
+  transition: all 0.3s var(--ease-smooth);
 }
 
 .timeline-nav-year {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
   font-family: var(--font-heading);
   font-size: 1.1rem;
   font-weight: 700;
@@ -1135,7 +1143,7 @@ html {
 .timeline-nav-btn:hover .timeline-nav-year,
 .timeline-nav-btn.active .timeline-nav-year {
   color: var(--gold);
-  transform: scale(1.1);
+  transform: translateX(-50%) scale(1.1);
 }
 
 .timeline-nav-btn:hover .timeline-nav-dot,
@@ -1148,20 +1156,12 @@ html {
 .timeline-content-wrapper {
   max-width: 650px;
   width: 100%;
-  margin: 0 auto;
+  margin: 40px auto 0;
   position: relative;
-  min-height: 240px; /* prevent layout shift */
 }
 
 .timeline-card-content {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(15px);
-  transition: opacity 0.4s var(--ease-smooth), transform 0.4s var(--ease-smooth), visibility 0.4s;
+  display: none;
   background: rgba(255, 255, 255, 0.04);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -1172,11 +1172,19 @@ html {
 }
 
 .timeline-card-content.active {
-  position: relative;
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-  z-index: 3;
+  display: block;
+  animation: fadeInTimelineCard 0.4s var(--ease-smooth) both;
+}
+
+@keyframes fadeInTimelineCard {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .timeline-card-year {
