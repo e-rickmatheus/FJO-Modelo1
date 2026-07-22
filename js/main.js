@@ -565,11 +565,38 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.classList.add('loading');
       }
 
-      // Simular envio (substituir por fetch/AJAX real em produção)
-      setTimeout(() => {
+      // Obter dados do formulário
+      const formData = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        subject: document.getElementById('subject').value,
+        message: document.getElementById('message').value
+      };
+
+      // Enviar os dados para a API Serverless local/Vercel
+      fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Falha ao enviar e-mail');
+        }
+        return response.json();
+      })
+      .then(data => {
         showSuccessMessage();
         contactForm.reset();
-
+      })
+      .catch(error => {
+        console.error(error);
+        alert('Ocorreu um erro ao enviar sua mensagem. Por favor, tente novamente.');
+      })
+      .finally(() => {
         // Restaurar botão
         if (submitBtn) {
           submitBtn.disabled = false;
@@ -580,7 +607,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
           submitBtn.classList.remove('loading');
         }
-      }, 1500);
+      });
     });
   }
 
