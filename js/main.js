@@ -714,7 +714,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ============================================================
 
   const timelineBtns = document.querySelectorAll('.timeline-nav-btn');
-  const timelineCards = document.querySelectorAll('.timeline-card-content');
+  const timelineCards = document.querySelectorAll('.timeline-card');
 
   if (timelineBtns.length > 0) {
     timelineBtns.forEach((btn) => {
@@ -728,7 +728,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Ativar o botão e o card correspondente
         btn.classList.add('active');
         const targetCard = document.querySelector(
-          `.timeline-card-content[data-index="${index}"]`
+          `.timeline-card[data-index="${index}"]`
         );
         if (targetCard) targetCard.classList.add('active');
       };
