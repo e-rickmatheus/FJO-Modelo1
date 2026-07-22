@@ -717,26 +717,70 @@ document.addEventListener('DOMContentLoaded', () => {
   const timelineCards = document.querySelectorAll('.timeline-card');
 
   if (timelineBtns.length > 0) {
+    let hideTimeout = null;
+    let activeIndex = null;
+
+    // Iniciar tudo como inativo (sem card ativo por padrão)
+    timelineBtns.forEach(btn => btn.classList.remove('active'));
+    timelineCards.forEach(card => card.classList.remove('active'));
+
+    const showCard = (index) => {
+      if (hideTimeout) clearTimeout(hideTimeout);
+      
+      timelineBtns.forEach((b) => {
+        if (b.getAttribute('data-index') === index) {
+          b.classList.add('active');
+        } else {
+          b.classList.remove('active');
+        }
+      });
+
+      timelineCards.forEach((c) => {
+        if (c.getAttribute('data-index') === index) {
+          c.classList.add('active');
+        } else {
+          c.classList.remove('active');
+        }
+      });
+      
+      activeIndex = index;
+    };
+
+    const hideCard = () => {
+      if (hideTimeout) clearTimeout(hideTimeout);
+      hideTimeout = setTimeout(() => {
+        timelineBtns.forEach(b => b.classList.remove('active'));
+        timelineCards.forEach(c => c.classList.remove('active'));
+        activeIndex = null;
+      }, 300); // delay de 300ms para permitir travessia do mouse ao card
+    };
+
     timelineBtns.forEach((btn) => {
-      const activateCard = () => {
-        const index = btn.getAttribute('data-index');
+      const index = btn.getAttribute('data-index');
 
-        // Desativar todos os botões e cards
-        timelineBtns.forEach((b) => b.classList.remove('active'));
-        timelineCards.forEach((c) => c.classList.remove('active'));
+      // Eventos de hover no botão do ano
+      btn.addEventListener('mouseenter', () => showCard(index));
+      btn.addEventListener('mouseleave', hideCard);
 
-        // Ativar o botão e o card correspondente
-        btn.classList.add('active');
-        const targetCard = document.querySelector(
-          `.timeline-card[data-index="${index}"]`
-        );
-        if (targetCard) targetCard.classList.add('active');
-      };
+      // Evento de clique para dispositivos móveis
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (activeIndex === index) {
+          timelineBtns.forEach(b => b.classList.remove('active'));
+          timelineCards.forEach(c => c.classList.remove('active'));
+          activeIndex = null;
+        } else {
+          showCard(index);
+        }
+      });
+    });
 
-      // Hover no Desktop para experiência dinâmica
-      btn.addEventListener('mouseenter', activateCard);
-      // Clique no Mobile / Touch
-      btn.addEventListener('click', activateCard);
+    // Eventos de hover no próprio card para mantê-lo visível ao ler
+    timelineCards.forEach((card) => {
+      card.addEventListener('mouseenter', () => {
+        if (hideTimeout) clearTimeout(hideTimeout);
+      });
+      card.addEventListener('mouseleave', hideCard);
     });
   }
 
