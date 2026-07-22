@@ -710,6 +710,37 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ============================================================
+  // 15. TIMELINE INTERATIVA
+  // ============================================================
+
+  const timelineBtns = document.querySelectorAll('.timeline-nav-btn');
+  const timelineCards = document.querySelectorAll('.timeline-card-content');
+
+  if (timelineBtns.length > 0) {
+    timelineBtns.forEach((btn) => {
+      const activateCard = () => {
+        const index = btn.getAttribute('data-index');
+
+        // Desativar todos os botões e cards
+        timelineBtns.forEach((b) => b.classList.remove('active'));
+        timelineCards.forEach((c) => c.classList.remove('active'));
+
+        // Ativar o botão e o card correspondente
+        btn.classList.add('active');
+        const targetCard = document.querySelector(
+          `.timeline-card-content[data-index="${index}"]`
+        );
+        if (targetCard) targetCard.classList.add('active');
+      };
+
+      // Hover no Desktop para experiência dinâmica
+      btn.addEventListener('mouseenter', activateCard);
+      // Clique no Mobile / Touch
+      btn.addEventListener('click', activateCard);
+    });
+  }
+
+  // ============================================================
   // LOG DE INICIALIZAÇÃO (apenas em desenvolvimento)
   // ============================================================
 
