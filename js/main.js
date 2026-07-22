@@ -671,9 +671,9 @@ document.addEventListener('DOMContentLoaded', () => {
     whatsappButton.addEventListener('click', (e) => {
       e.preventDefault();
 
-      const phoneNumber = '5531328215880';
+      const phoneNumber = '5531994310909';
       const message = encodeURIComponent(
-        'Olá! Gostaria de agendar uma consulta com o escritório Fernando José de Oliveira Advogados.'
+        'Olá! Vim através do site do Dr. Fernando José de Oliveira e gostaria de solicitar um atendimento.'
       );
 
       const whatsappURL = `https://wa.me/${phoneNumber}?text=${message}`;
