@@ -309,11 +309,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const target = parseInt(heroCounter.getAttribute('data-target'), 10);
     if (!isNaN(target)) {
       setTimeout(() => {
-        const start = performance.now();
-        const duration = 2000;
+        const start = Date.now();
+        const duration = 5000; // 5 segundos
 
-        function step(now) {
-          const elapsed = now - start;
+        function step() {
+          const elapsed = Date.now() - start;
           const progress = Math.min(elapsed / duration, 1);
           const value = Math.floor(easeOutQuart(progress) * target);
 
