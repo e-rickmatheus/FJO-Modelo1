@@ -310,7 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!isNaN(target)) {
       setTimeout(() => {
         const start = Date.now();
-        const duration = 5000; // 5 segundos
+        const duration = 10000; // 10 segundos
 
         function step() {
           const elapsed = Date.now() - start;
