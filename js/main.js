@@ -303,6 +303,34 @@ document.addEventListener('DOMContentLoaded', () => {
     statsObserver.observe(statsSection);
   }
 
+  // Contador do Topo (Hero Counter)
+  const heroCounter = document.querySelector('.hero-counter');
+  if (heroCounter) {
+    const target = parseInt(heroCounter.getAttribute('data-target'), 10);
+    if (!isNaN(target)) {
+      setTimeout(() => {
+        const start = performance.now();
+        const duration = 2000;
+
+        function step(now) {
+          const elapsed = now - start;
+          const progress = Math.min(elapsed / duration, 1);
+          const value = Math.floor(easeOutQuart(progress) * target);
+
+          // Formata de 00 até 45
+          heroCounter.textContent = String(value).padStart(2, '0');
+
+          if (progress < 1) {
+            requestAnimationFrame(step);
+          } else {
+            heroCounter.textContent = target;
+          }
+        }
+        requestAnimationFrame(step);
+      }, 300);
+    }
+  }
+
   // ============================================================
   // 8. EFEITO DE DIGITAÇÃO (TYPING)
   // ============================================================
